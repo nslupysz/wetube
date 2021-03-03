@@ -1,14 +1,31 @@
-export const home = (req, res) => res.render("home", { pageTitle: "Home" });
-export const search = (req, res) =>
-  res.render("Search", { pageTitle: "Search" });
+import routes from "../routes";
+import Video from "../models/Video";
 
-export const videos = (req, res) =>
-  res.render("Videos", { pageTitle: "Video" });
-export const upload = (req, res) =>
-  res.render("Upload", { pageTitle: "Upload" });
+export const home = async (req, res) => {
+  //const videos = await Video.find({});
+  res.render("home", { pageTitle: "Home" });
+};
+export const search = (req, res) => {
+  const {
+    query: { term: searchingBy },
+  } = req;
+  res.render("search", { pageTitle: "Search", searchingBy });
+};
+
+export const getUpload = (req, res) =>
+  res.render("upload", { pageTitle: "Upload" });
+
+export const postUpload = (req, res) => {
+  const {
+    body: { file, title, description },
+  } = req;
+  console.log(req.file);
+  res.redirect(routes.videoDetail());
+};
+
 export const videoDetail = (req, res) =>
-  res.render("Video-Detail", { pageTitle: "Video Detail" });
+  res.render("videoDetail", { pageTitle: "Video Detail" });
 export const editVideo = (req, res) =>
-  res.render("Edit-Video", { pageTitle: "Edit Video" });
+  res.render("editVideo", { pageTitle: "Edit Video" });
 export const deleteVideo = (req, res) =>
-  res.render("Delete-Video", { pageTitle: "Delete Video" });
+  res.render("deleteVideo", { pageTitle: "Delete Video" });
